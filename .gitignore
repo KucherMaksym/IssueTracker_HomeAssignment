@@ -33,3 +33,7 @@ target/
 .settings
 .springBeans
 .sts4-cache
+
+# Ignore google api private key
+*.json
+credentials.json
