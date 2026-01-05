@@ -1,0 +1,35 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# Maven
+target/
+
+# Package Files
+*.jar
+*.zip
+
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+target/
+**/target/
+
+**/.mvn/wrapper/maven-wrapper.jar
+
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
