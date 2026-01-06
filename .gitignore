@@ -5,8 +5,11 @@
 # VS Code
 .vscode/
 
-# Maven
+# Maven, Gradle
 target/
+build/
+.gradle/
+
 
 # Package Files
 *.jar
