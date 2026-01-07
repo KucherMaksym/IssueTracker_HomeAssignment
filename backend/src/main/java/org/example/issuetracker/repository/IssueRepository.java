@@ -2,10 +2,14 @@ package org.example.issuetracker.repository;
 
 import org.example.issuetracker.model.Issue;
 import org.example.issuetracker.model.IssueStatus;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IssueRepository {
+
+    Optional<Issue> findById(String id);
 
     // Create
     Issue save(Issue issue);
