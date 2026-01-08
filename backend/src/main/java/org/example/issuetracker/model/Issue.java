@@ -1,9 +1,23 @@
 package org.example.issuetracker.model;
 
-import lombok.Builder;
+import lombok.*;
 
 import java.time.Instant;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public record Issue (String id, String description, String parentId, IssueStatus status, Instant createdAt, Instant updatedAt) {}
+@EqualsAndHashCode
+@ToString
+public class Issue {
 
+    private String id;
+    private String description;
+    private String parentId;
+    private IssueStatus status;
+    private Instant createdAt;
+    private Instant updatedAt;
+
+}

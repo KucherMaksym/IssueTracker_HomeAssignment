@@ -6,6 +6,7 @@ import org.example.issuetracker.model.IssueStatus;
 import org.example.issuetracker.repository.IssueRepository;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class IssueService {
                 .build();
     }
 
-    public void updateStatus(String id, IssueStatus newStatus) {
+    public void updateStatus(String id, IssueStatus newStatus) throws IOException {
         issueRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Issue not found: " + id));
         issueRepository.updateStatus(id, newStatus);
     }
