@@ -18,11 +18,14 @@ public class IssueService {
 
     public Issue createIssue(String description, String parentId) {
 
-        return Issue.builder()
+        Issue newIssue = Issue.builder()
                 .description(description)
                 .parentId(parentId)
+                .status(IssueStatus.OPEN)
                 .createdAt(Instant.now())
                 .build();
+
+        return issueRepository.save(newIssue);
     }
 
     public void updateStatus(String id, IssueStatus newStatus) throws IOException {
@@ -31,7 +34,7 @@ public class IssueService {
     }
 
     public List<Issue> listByStatus(IssueStatus status) {
-        return issueRepository .findAllByStatus(status);
+        return issueRepository.findAllByStatus(status);
     }
 
 }

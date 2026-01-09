@@ -34,14 +34,14 @@ public class GoogleSheetsRepository implements IssueRepository {
             String newId = "AD-" + nextId;
             issue.setId(newId);
 
-            // Compose row data
+            // Compose row data. Null is not acceptable, pass "" instead
             List<Object> row = Arrays.asList(
                     issue.getId(),
                     issue.getDescription(),
-                    issue.getParentId() != null ? issue.getParentId() : null,
-                    issue.getStatus(),
-                    issue.getCreatedAt(),
-                    issue.getUpdatedAt()
+                    issue.getParentId() != null ? issue.getParentId() : "",
+                    issue.getStatus() != null ? issue.getStatus().name() : "",
+                    issue.getCreatedAt() != null ? issue.getCreatedAt().toString() : "",
+                    issue.getUpdatedAt() != null ? issue.getUpdatedAt().toString() : ""
             );
 
             ValueRange body = new ValueRange().setValues(Collections.singletonList(row));
@@ -112,7 +112,7 @@ public class GoogleSheetsRepository implements IssueRepository {
     private int getNextId() throws IOException {
         List<List<Object>> values = fetchAllRows();
         if (values == null || values.isEmpty() || values.size() == 1) return 1;
-        return values.size() + 1;
+        return values.size();
     }
 
     private List<Issue> findAll() {
@@ -138,21 +138,22 @@ public class GoogleSheetsRepository implements IssueRepository {
                     continue;
                 }
 
-                if (row.size() >= 4) {
+                if (row.size() >= 5) {
                     Issue issue = Issue.builder()
                             .id(row.get(0).toString())
                             .description(row.get(1).toString())
                             .parentId(row.get(2).toString())
                             .status(IssueStatus.valueOf(row.get(3).toString()))
                             .createdAt(Instant.parse(row.get(4).toString()))
-                            .updatedAt(Instant.parse(row.get(5).toString()))
+                            .updatedAt(row.size() >= 6 ? Instant.parse(row.get(5).toString()) : null)
                             .build();
+                    issues.add(issue);
                 }
             }
 
             return issues;
         } catch (Exception e) {
-            throw new RuntimeException("Failed to parse issues");
+            throw new RuntimeException("Failed to parse issues", e);
         }
 
     }
