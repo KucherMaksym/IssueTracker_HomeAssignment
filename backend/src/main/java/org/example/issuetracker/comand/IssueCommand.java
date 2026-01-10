@@ -52,7 +52,7 @@ public class IssueCommand {
     public String createIssue(
             @Option(longNames = "desc", description = "Description of the issue", required = true) String desc,
             @Option(longNames = "parent", description = "Parent Issue ID") String parent
-    ) {
+    ) throws IOException {
         Issue issue = issueService.createIssue(desc, parent);
         return "Created issue with ID: " + issue.getId();
     }

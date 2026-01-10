@@ -16,8 +16,9 @@ public class IssueService {
 
     private final IssueRepository issueRepository;
 
-    public Issue createIssue(String description, String parentId) {
+    public Issue createIssue(String description, String parentId) throws IOException {
 
+        issueRepository.findById(parentId).orElseThrow(() -> new IllegalArgumentException("Parent issue not found"));
         Issue newIssue = Issue.builder()
                 .description(description)
                 .parentId(parentId)
