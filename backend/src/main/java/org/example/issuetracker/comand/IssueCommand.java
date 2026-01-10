@@ -61,8 +61,9 @@ public class IssueCommand {
     @Command(command = "update", description = "Update issue status: --id <id> --status <status>")
     public String updateStatus(
             @Option(longNames = "id", description = "Issue ID", required = true) String id,
-            @Option(longNames = "status", description = "New Status (OPEN, IN_PROGRESS, CLOSED)", required = true) IssueStatus status
+            @Option(longNames = "status", description = "New Status (OPEN, IN_PROGRESS, CLOSED)", required = true) String statusString
     ) throws IOException {
+        IssueStatus status = IssueStatus.valueOf(statusString.toUpperCase());
         issueService.updateStatus(id, status);
         return "Status updated successfully.";
     }
@@ -70,8 +71,9 @@ public class IssueCommand {
     // list --status OPEN
     @Command(command = "list", description = "List issues by status: --status <status>")
     public void listIssues(
-            @Option(longNames = "status", description = "Status to filter by", required = true) IssueStatus status
+            @Option(longNames = "status", description = "Status to filter by", required = true) String statusString
     ) {
+        IssueStatus status = IssueStatus.valueOf(statusString.toUpperCase());
         List<Issue> issues = issueService.listByStatus(status);
 
         String formatedIssues = formatIssuesToTable(issues);
